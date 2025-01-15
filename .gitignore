@@ -38,3 +38,4 @@ docs/
 # Ignore MacOS and Windows system files
 .DS_Store
 Thumbs.db
+.Rproj.user
