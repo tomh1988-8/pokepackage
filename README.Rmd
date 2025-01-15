@@ -1,0 +1,99 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# pokepackage
+
+<!-- badges: start -->
+<!-- badges: end -->
+The goal of pokepackage is to provide tools to enhance Pokémon data, including boosting stats, updating abilities, and preparing for battles.
+
+## Installation
+
+You can install the development version of pokepackage from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("tomh1988-8/pokepackage")
+```
+
+## Example
+Below are examples demonstrating the main functionality of pokepackage:
+
+### Boost Pokémon Stats with pokehack
+This function boosts the stats of a specified Pokémon by 10%:
+```{r}
+library(pokepackage)
+library(dplyr)
+
+# Example Pokémon data
+pokedata <- data.frame(
+  name = c("Bulbasaur", "Charmander", "Squirtle"),
+  defense = c(49, 43, 65),
+  sp_attack = c(65, 60, 50),
+  sp_defense = c(65, 50, 64),
+  speed = c(45, 65, 43)
+)
+
+# Boost Bulbasaur's stats
+pokedata <- pokehack("Bulbasaur", pokedata)
+print(pokedata)
+
+```
+
+### Update Pokémon Abilities with pokeskill
+This function allows updating or adding new abilities to one or more Pokémon:
+```{r}
+library(pokepackage)
+library(dplyr)
+
+# Add abilities to Bulbasaur and Charmander
+pokedata <- data.frame(
+  name = c("Bulbasaur", "Charmander", "Squirtle"),
+  abilities = c("[Overgrow]", "[Blaze]", "[Torrent]")
+)
+
+pokedata <- pokeskill(
+  pokemon = c("Bulbasaur", "Charmander"),
+  new_skills = c("Solar Beam", "Inferno"),
+  data = pokedata
+)
+print(pokedata)
+
+```
+
+### Train Pokémon with poketrain
+This function trains six selected Pokémon, decreasing their weight and increasing their experience growth:
+```{r}
+library(pokepackage)
+library(dplyr)
+
+# Train six Pokémon
+pokedata <- data.frame(
+  name = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
+  weight_kg = c(6.9, 8.5, 9.0, 6.0, 5.5, 4.2),
+  experience_growth = c(100, 120, 110, 95, 85, 80)
+)
+
+trained_pokedata <- poketrain(
+  selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
+  data = pokedata
+)
+print(trained_pokedata)
+
+```
+
+### Notes
+Ensure all required libraries (dplyr, etc.) are loaded within the package or session.
+Handle input errors gracefully. For example, invalid Pokémon names will result in error messages.
