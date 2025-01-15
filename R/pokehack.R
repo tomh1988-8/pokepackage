@@ -12,12 +12,13 @@
 #' @return A modified data frame with the updated stats for the specified Pokémon.
 #' @examples
 #' pokedata <- pokehack("Bulbasaur", pokedata)
+#' @export
 pokehack <- function(pokemon_name, data) {
   # Validate input: Check if the Pokémon name exists
   if (!pokemon_name %in% data$name) {
     stop("The specified Pokémon name does not exist in the dataset.")
   }
-  
+
   # Update the stats using tidyverse functions
   data <- data %>%
     dplyr::mutate(
@@ -26,6 +27,6 @@ pokehack <- function(pokemon_name, data) {
       sp_defense = ifelse(name == pokemon_name, sp_defense * 1.1, sp_defense),
       speed = ifelse(name == pokemon_name, speed * 1.1, speed)
     )
-  
+
   return(data)
 }

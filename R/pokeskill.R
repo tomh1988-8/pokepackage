@@ -14,13 +14,14 @@
 #'   new_skills = c("Solar Beam", "Inferno"),
 #'   data = pokedata
 #' )
+#' @export
 pokeskill <- function(pokemon, new_skills, data) {
   # Validate input: Ensure Pokémon exist in the dataset
   missing_pokemon <- setdiff(pokemon, data$name)
   if (length(missing_pokemon) > 0) {
     stop(paste("The following Pokémon are not in the dataset:", paste(missing_pokemon, collapse = ", ")))
   }
-  
+
   # Update the abilities for the specified Pokémon
   data <- data %>%
     dplyr::mutate(
@@ -35,6 +36,6 @@ pokeskill <- function(pokemon, new_skills, data) {
         abilities
       )
     )
-  
+
   return(data)
 }

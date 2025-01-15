@@ -14,24 +14,25 @@
 #'   selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
 #'   data = pokedata
 #' )
+#' @export
 poketrain <- function(selected_pokemon, data) {
   # Validate input: Ensure exactly 6 Pokémon are selected
   if (length(selected_pokemon) != 6) {
     stop("You must select exactly 6 Pokémon for training.")
   }
-  
+
   # Validate input: Ensure all selected Pokémon exist in the dataset
   missing_pokemon <- setdiff(selected_pokemon, data$name)
   if (length(missing_pokemon) > 0) {
     stop(paste("The following Pokémon are not in the dataset:", paste(missing_pokemon, collapse = ", ")))
   }
-  
+
   # Update the stats for the selected Pokémon
   data <- data %>%
     dplyr::mutate(
       weight_kg = ifelse(name %in% selected_pokemon, weight_kg * 0.9, weight_kg),
       experience_growth = ifelse(name %in% selected_pokemon, experience_growth * 1.05, experience_growth)
     )
-  
+
   return(data)
 }
