@@ -21,5 +21,13 @@ and increases the specified attributes (defense, sp_attack, sp_defense, speed)
 by 10\%.
 }
 \examples{
-pokedata <- pokehack("Bulbasaur", pokedata)
+# Load the necessary libraries
+library(dplyr)
+
+# Load the pokemon dataset
+data("pokemon", package = "pokepackage")
+
+# Boost Bulbasaur's stats
+pokemon <- pokehack("Bulbasaur", pokemon)
+print(pokemon)
 }

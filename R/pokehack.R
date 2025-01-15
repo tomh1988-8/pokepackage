@@ -11,7 +11,15 @@
 #'
 #' @return A modified data frame with the updated stats for the specified Pokémon.
 #' @examples
+#' # Load the necessary libraries
+#' library(dplyr)
+#'
+#' # Load the pokemon dataset
+#' data("pokemon", package = "pokepackage")
+#'
+#' # Boost Bulbasaur's stats
 #' pokemon <- pokehack("Bulbasaur", pokemon)
+#' print(pokemon)
 #' @export
 pokehack <- function(pokemon_name, data) {
   # Validate input: Check if the Pokémon name exists

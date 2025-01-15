@@ -10,6 +10,12 @@
 #'
 #' @return A modified data frame with updated `weight_kg` and `experience_growth` for the selected Pokémon.
 #' @examples
+#' # Load the necessary libraries
+#' library(dplyr)
+#'
+#' # Load the pokemon dataset
+#' data("pokemon", package = "pokepackage")
+#'
 #' trained_pokemon <- poketrain(
 #'   selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
 #'   data = pokemon

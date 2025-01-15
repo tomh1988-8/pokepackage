@@ -9,6 +9,12 @@
 #'
 #' @return A modified data frame with the updated abilities for the specified Pokémon.
 #' @examples
+#' # Load the necessary libraries
+#' library(dplyr)
+#'
+#' # Load the pokemon dataset
+#' data("pokemon", package = "pokepackage")
+#'
 #' pokemon <- pokeskill(
 #'   pokemon = c("Bulbasaur", "Charmander"),
 #'   new_skills = c("Solar Beam", "Inferno"),

@@ -20,8 +20,14 @@ This function allows a user to select 6 Pokémon for training before a battle.
 The selected Pokémon lose 10\% of their body weight (\code{weight_kg}) and gain 5\% experience (\code{experience_growth}).
 }
 \examples{
-trained_pokedata <- poketrain(
+# Load the necessary libraries
+library(dplyr)
+
+# Load the pokemon dataset
+data("pokemon", package = "pokepackage")
+
+trained_pokemon <- poketrain(
   selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
-  data = pokedata
+  data = pokemon
 )
 }

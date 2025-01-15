@@ -20,9 +20,15 @@ A modified data frame with the updated abilities for the specified Pokémon.
 This function allows the user to add new abilities to one or more Pokémon in the dataset.
 }
 \examples{
-pokedata <- pokeskill(
+# Load the necessary libraries
+library(dplyr)
+
+# Load the pokemon dataset
+data("pokemon", package = "pokepackage")
+
+pokemon <- pokeskill(
   pokemon = c("Bulbasaur", "Charmander"),
   new_skills = c("Solar Beam", "Inferno"),
-  data = pokedata
+  data = pokemon
 )
 }
