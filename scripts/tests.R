@@ -155,21 +155,60 @@ test_that("poketrain handles an empty dataset gracefully", {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ########################## FUNCTION 3 ##########################
+test_that("pokeskill correctly updates abilities for valid Pokémon", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle"),
+    abilities = c("['Overgrow']", "['Blaze']", "['Torrent']")
+  )
+  
+  # Apply the function
+  updated_data <- pokeskill(
+    pokemon = c("Bulbasaur", "Charmander"),
+    new_skills = c("Solar Beam", "Inferno"),
+    data = dummy_data
+  )
+  
+  # Check updated abilities
+  expect_equal(
+    updated_data$abilities[updated_data$name == "Bulbasaur"],
+    "['Overgrow'], Solar Beam, Inferno"
+  )
+  expect_equal(
+    updated_data$abilities[updated_data$name == "Charmander"],
+    "['Blaze'], Solar Beam, Inferno"
+  )
+  
+  # Check unchanged abilities
+  expect_equal(
+    updated_data$abilities[updated_data$name == "Squirtle"],
+    "['Torrent']"
+  )
+})
+
+test_that("pokeskill throws an error for nonexistent Pokémon", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle"),
+    abilities = c("['Overgrow']", "['Blaze']", "['Torrent']")
+  )
+  
+  # Check for error with invalid Pokémon
+  expect_error(
+    pokeskill(
+      pokemon = c("Pikachu", "Eevee"),
+      new_skills = c("Thunderbolt"),
+      data = dummy_data
+    ),
+    "The following Pokémon are not in the dataset: Pikachu, Eevee"
+  )
+})
+
+
+
+
+
+
+
+
