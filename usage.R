@@ -60,6 +60,3 @@ pokedata <- pokeskill(selected_pokemon, skills_to_add, pokedata)
 # Print abilities after adding new skills
 cat("Abilities AFTER adding new skills:\n")
 print(pokedata %>% filter(name %in% selected_pokemon) %>% select(name, abilities))
-
-
-
