@@ -40,7 +40,7 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 
 # Example Pokémon data
-pokedata <- data.frame(
+pokemon <- data.frame(
   name = c("Bulbasaur", "Charmander", "Squirtle"),
   defense = c(49, 43, 65),
   sp_attack = c(65, 60, 50),
@@ -49,8 +49,8 @@ pokedata <- data.frame(
 )
 
 # Boost Bulbasaur's stats
-pokedata <- pokehack("Bulbasaur", pokedata)
-print(pokedata)
+pokemon <- pokehack("Bulbasaur", pokemon)
+print(pokemon)
 #>         name defense sp_attack sp_defense speed
 #> 1  Bulbasaur    53.9      71.5       71.5  49.5
 #> 2 Charmander    43.0      60.0       50.0  65.0
@@ -67,17 +67,17 @@ library(pokepackage)
 library(dplyr)
 
 # Add abilities to Bulbasaur and Charmander
-pokedata <- data.frame(
+pokemon <- data.frame(
   name = c("Bulbasaur", "Charmander", "Squirtle"),
   abilities = c("[Overgrow]", "[Blaze]", "[Torrent]")
 )
 
-pokedata <- pokeskill(
+pokemon <- pokeskill(
   pokemon = c("Bulbasaur", "Charmander"),
   new_skills = c("Solar Beam", "Inferno"),
-  data = pokedata
+  data = pokemon
 )
-print(pokedata)
+print(pokemon)
 #>         name                           abilities
 #> 1  Bulbasaur [Overgrow, 'Solar Beam', 'Inferno']
 #> 2 Charmander    [Blaze, 'Solar Beam', 'Inferno']
@@ -94,17 +94,17 @@ library(pokepackage)
 library(dplyr)
 
 # Train six Pokémon
-pokedata <- data.frame(
+pokemon <- data.frame(
   name = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
   weight_kg = c(6.9, 8.5, 9.0, 6.0, 5.5, 4.2),
   experience_growth = c(100, 120, 110, 95, 85, 80)
 )
 
-trained_pokedata <- poketrain(
+trained_pokemon <- poketrain(
   selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
-  data = pokedata
+  data = pokemon
 )
-print(trained_pokedata)
+print(trained_pokemon)
 #>         name weight_kg experience_growth
 #> 1  Bulbasaur      6.21            105.00
 #> 2 Charmander      7.65            126.00

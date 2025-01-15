@@ -1,0 +1,33 @@
+#' Pokémon Dataset
+#'
+#' A dataset containing information about various Pokémon, including their stats, abilities, types, and other attributes.
+#'
+#' @format A data frame with 801 observations and 41 variables:
+#' \describe{
+#'   \item{abilities}{Character. A list of abilities for each Pokémon.}
+#'   \item{against_bug, against_dark, ..., against_water}{Numeric. Multipliers for the Pokémon's effectiveness against different types.}
+#'   \item{attack}{Integer. The attack stat of the Pokémon.}
+#'   \item{base_egg_steps}{Integer. The number of steps required to hatch an egg.}
+#'   \item{base_happiness}{Integer. The base happiness level of the Pokémon.}
+#'   \item{base_total}{Integer. The sum of all base stats.}
+#'   \item{capture_rate}{Character. The capture rate of the Pokémon, indicating how easy it is to catch.}
+#'   \item{classfication}{Character. The classification or category of the Pokémon.}
+#'   \item{defense}{Integer. The defense stat of the Pokémon.}
+#'   \item{experience_growth}{Integer. The total experience needed for the Pokémon to reach its maximum level.}
+#'   \item{height_m}{Numeric. The height of the Pokémon in meters.}
+#'   \item{hp}{Integer. The hit points (HP) stat of the Pokémon.}
+#'   \item{japanese_name}{Character. The name of the Pokémon in Japanese, including Kana or Kanji.}
+#'   \item{name}{Character. The name of the Pokémon.}
+#'   \item{percentage_male}{Numeric. The percentage chance of the Pokémon being male.}
+#'   \item{pokedex_number}{Integer. The index number of the Pokémon in the Pokédex.}
+#'   \item{sp_attack}{Integer. The special attack stat of the Pokémon.}
+#'   \item{sp_defense}{Integer. The special defense stat of the Pokémon.}
+#'   \item{speed}{Integer. The speed stat of the Pokémon.}
+#'   \item{type1, type2}{Character. The primary and secondary types of the Pokémon (if applicable).}
+#'   \item{weight_kg}{Numeric. The weight of the Pokémon in kilograms.}
+#'   \item{generation}{Integer. The generation in which the Pokémon was introduced.}
+#'   \item{is_legendary}{Integer. Indicates if the Pokémon is legendary (1 for legendary, 0 otherwise).}
+#' }
+#' @source Pokémon data sourced from [source].
+"pokemon"
+

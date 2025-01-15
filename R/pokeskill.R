@@ -9,10 +9,10 @@
 #'
 #' @return A modified data frame with the updated abilities for the specified Pokémon.
 #' @examples
-#' pokedata <- pokeskill(
+#' pokemon <- pokeskill(
 #'   pokemon = c("Bulbasaur", "Charmander"),
 #'   new_skills = c("Solar Beam", "Inferno"),
-#'   data = pokedata
+#'   data = pokemon
 #' )
 #' @export
 pokeskill <- function(pokemon, new_skills, data) {

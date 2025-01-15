@@ -11,7 +11,7 @@
 #'
 #' @return A modified data frame with the updated stats for the specified Pokémon.
 #' @examples
-#' pokedata <- pokehack("Bulbasaur", pokedata)
+#' pokemon <- pokehack("Bulbasaur", pokemon)
 #' @export
 pokehack <- function(pokemon_name, data) {
   # Validate input: Check if the Pokémon name exists

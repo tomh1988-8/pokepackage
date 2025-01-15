@@ -10,9 +10,9 @@
 #'
 #' @return A modified data frame with updated `weight_kg` and `experience_growth` for the selected Pokémon.
 #' @examples
-#' trained_pokedata <- poketrain(
+#' trained_pokemon <- poketrain(
 #'   selected_pokemon = c("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Jigglypuff", "Meowth"),
-#'   data = pokedata
+#'   data = pokemon
 #' )
 #' @export
 poketrain <- function(selected_pokemon, data) {
