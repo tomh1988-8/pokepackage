@@ -1,6 +1,7 @@
 Package: pokepackage
 Title: Become a Pokemon trainer!
 Version: 0.0.0.9000
+URL: https://tomh1988-8.github.io/pokepackage
 Authors@R: 
     person("Tom", "Hunter", , "tom.hunter@cityandguilds.com", role = c("aut", "cre"))
 Description: Altering attributes of pokemon in a fun way kind of like training them. 
