@@ -21,7 +21,6 @@
 .Rbuildignore
 
 # Ignore data and cache folders
-/data/
 .cache/
 .renv/
 
