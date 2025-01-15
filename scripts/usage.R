@@ -8,7 +8,7 @@ library(here)
 pokedata <- read.csv(here("data","pokemon.csv"))
 
 
-########################## FUNCTION 1: boost_pokemon_stats ##########################
+########################## FUNCTION 1: pokehack ##########################
 
 
 
@@ -22,7 +22,7 @@ pokedata <- read.csv(here("data","pokemon.csv"))
 
 
 
-########################## FUNCTION 2 ##########################
+########################## FUNCTION 2: poketrain ##########################
 
 
 

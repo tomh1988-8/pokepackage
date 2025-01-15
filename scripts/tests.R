@@ -3,9 +3,9 @@ library(tidyverse)
 library(testthat)
 
 
-########################## FUNCTION 1: boost_pokemon_stats ##########################
+########################## FUNCTION 1: pokehack ##########################
 # Define the unit tests
-test_that("boost_pokemon_stats works correctly for valid Pokémon", {
+test_that("pokehack works correctly for valid Pokémon", {
   # Create dummy data
   dummy_data <- tibble(
     name = c("Bulbasaur", "Charmander", "Squirtle"),
@@ -14,22 +14,22 @@ test_that("boost_pokemon_stats works correctly for valid Pokémon", {
     sp_defense = c(65, 50, 64),
     speed = c(45, 65, 43)
   )
-  
+
   # Apply the function to boost stats for Bulbasaur
-  updated_data <- boost_pokemon_stats("Bulbasaur", dummy_data)
-  
+  updated_data <- pokehack("Bulbasaur", dummy_data)
+
   # Check that only Bulbasaur's stats are boosted
   expect_equal(updated_data$defense[updated_data$name == "Bulbasaur"], 49 * 1.1)
   expect_equal(updated_data$sp_attack[updated_data$name == "Bulbasaur"], 65 * 1.1)
   expect_equal(updated_data$sp_defense[updated_data$name == "Bulbasaur"], 65 * 1.1)
   expect_equal(updated_data$speed[updated_data$name == "Bulbasaur"], 45 * 1.1)
-  
+
   # Check that other Pokémon's stats remain unchanged
   expect_equal(updated_data$defense[updated_data$name == "Charmander"], 43)
   expect_equal(updated_data$sp_attack[updated_data$name == "Squirtle"], 50)
 })
 
-test_that("boost_pokemon_stats throws an error for invalid Pokémon", {
+test_that("pokehack throws an error for invalid Pokémon", {
   # Create dummy data
   dummy_data <- tibble(
     name = c("Bulbasaur", "Charmander", "Squirtle"),
@@ -38,13 +38,15 @@ test_that("boost_pokemon_stats throws an error for invalid Pokémon", {
     sp_defense = c(65, 50, 64),
     speed = c(45, 65, 43)
   )
-  
+
   # Expect an error when the Pokémon name does not exist
-  expect_error(boost_pokemon_stats("Pikachu", dummy_data), 
-               "The specified Pokémon name does not exist in the dataset.")
+  expect_error(
+    pokehack("Pikachu", dummy_data),
+    "The specified Pokémon name does not exist in the dataset."
+  )
 })
 
-test_that("boost_pokemon_stats handles empty datasets", {
+test_that("pokehack handles empty datasets", {
   # Create empty dummy data
   empty_data <- tibble(
     name = character(),
@@ -53,14 +55,104 @@ test_that("boost_pokemon_stats handles empty datasets", {
     sp_defense = integer(),
     speed = integer()
   )
-  
+
   # Expect an error when the dataset is empty
-  expect_error(boost_pokemon_stats("Bulbasaur", empty_data), 
-               "The specified Pokémon name does not exist in the dataset.")
+  expect_error(
+    pokehack("Bulbasaur", empty_data),
+    "The specified Pokémon name does not exist in the dataset."
+  )
 })
 
 
-########################## FUNCTION 2 ##########################
+########################## FUNCTION 2: poketrain ##########################
+test_that("poketrain correctly updates stats for selected Pokémon", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth", "Jigglypuff"),
+    weight_kg = c(6.9, 8.5, 9.0, 13.0, 6.0, 4.2, 5.5),
+    experience_growth = c(1000000, 1050000, 950000, 1100000, 1200000, 800000, 600000)
+  )
+  
+  # Define the Pokémon to train
+  selected_pokemon <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth")
+  
+  # Apply the function
+  trained_data <- poketrain(selected_pokemon, dummy_data)
+  
+  # Verify weight reduction and experience gain for selected Pokémon
+  for (pokemon in selected_pokemon) {
+    expect_equal(
+      trained_data$weight_kg[trained_data$name == pokemon],
+      dummy_data$weight_kg[dummy_data$name == pokemon] * 0.9
+    )
+    expect_equal(
+      trained_data$experience_growth[trained_data$name == pokemon],
+      dummy_data$experience_growth[dummy_data$name == pokemon] * 1.05
+    )
+  }
+  
+  # Verify stats remain unchanged for unselected Pokémon
+  unselected_pokemon <- setdiff(dummy_data$name, selected_pokemon)
+  for (pokemon in unselected_pokemon) {
+    expect_equal(
+      trained_data$weight_kg[trained_data$name == pokemon],
+      dummy_data$weight_kg[dummy_data$name == pokemon]
+    )
+    expect_equal(
+      trained_data$experience_growth[trained_data$name == pokemon],
+      dummy_data$experience_growth[dummy_data$name == pokemon]
+    )
+  }
+})
+
+test_that("poketrain throws an error if not exactly 6 Pokémon are selected", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth"),
+    weight_kg = c(6.9, 8.5, 9.0, 13.0, 6.0, 4.2),
+    experience_growth = c(1000000, 1050000, 950000, 1100000, 1200000, 800000)
+  )
+  
+  # Select fewer than 6 Pokémon
+  too_few <- c("Bulbasaur", "Charmander", "Squirtle")
+  expect_error(poketrain(too_few, dummy_data), 
+               "You must select exactly 6 Pokémon for training.")
+  
+  # Select more than 6 Pokémon
+  too_many <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth", "Jigglypuff")
+  expect_error(poketrain(too_many, dummy_data), 
+               "You must select exactly 6 Pokémon for training.")
+})
+
+test_that("poketrain throws an error if selected Pokémon do not exist", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle"),
+    weight_kg = c(6.9, 8.5, 9.0),
+    experience_growth = c(1000000, 1050000, 950000)
+  )
+  
+  # Select a nonexistent Pokémon
+  nonexistent <- c("Pikachu", "Charmander", "Squirtle", "Ivysaur", "Meowth", "Jigglypuff")
+  expect_error(poketrain(nonexistent, dummy_data), 
+               "The following Pokémon are not in the dataset: Pikachu, Ivysaur, Meowth, Jigglypuff")
+})
+
+test_that("poketrain handles an empty dataset gracefully", {
+  # Create empty dummy data
+  empty_data <- tibble(
+    name = character(),
+    weight_kg = numeric(),
+    experience_growth = numeric()
+  )
+  
+  # Select Pokémon (irrelevant because the dataset is empty)
+  selected_pokemon <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth")
+  
+  # Expect an error
+  expect_error(poketrain(selected_pokemon, empty_data), 
+               "The following Pokémon are not in the dataset: Bulbasaur, Charmander, Squirtle, Ivysaur, Pikachu, Meowth")
+})
 
 
 
@@ -81,22 +173,3 @@ test_that("boost_pokemon_stats handles empty datasets", {
 
 
 ########################## FUNCTION 3 ##########################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
