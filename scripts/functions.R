@@ -107,7 +107,12 @@ pokeskill <- function(pokemon, new_skills, data) {
     dplyr::mutate(
       abilities = ifelse(
         name %in% pokemon,
-        paste0(abilities, ", ", paste(new_skills, collapse = ", ")),
+        # Properly format the abilities to include new skills
+        paste0(
+          sub("\\]$", "", abilities), # Remove the closing bracket
+          ifelse(nchar(new_skills) > 0, paste0(", '", paste(new_skills, collapse = "', '"), "'"), ""), # Add new skills
+          "]" # Re-add the closing bracket
+        ),
         abilities
       )
     )

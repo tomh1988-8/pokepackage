@@ -72,13 +72,13 @@ test_that("poketrain correctly updates stats for selected Pokémon", {
     weight_kg = c(6.9, 8.5, 9.0, 13.0, 6.0, 4.2, 5.5),
     experience_growth = c(1000000, 1050000, 950000, 1100000, 1200000, 800000, 600000)
   )
-  
+
   # Define the Pokémon to train
   selected_pokemon <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth")
-  
+
   # Apply the function
   trained_data <- poketrain(selected_pokemon, dummy_data)
-  
+
   # Verify weight reduction and experience gain for selected Pokémon
   for (pokemon in selected_pokemon) {
     expect_equal(
@@ -90,7 +90,7 @@ test_that("poketrain correctly updates stats for selected Pokémon", {
       dummy_data$experience_growth[dummy_data$name == pokemon] * 1.05
     )
   }
-  
+
   # Verify stats remain unchanged for unselected Pokémon
   unselected_pokemon <- setdiff(dummy_data$name, selected_pokemon)
   for (pokemon in unselected_pokemon) {
@@ -112,16 +112,20 @@ test_that("poketrain throws an error if not exactly 6 Pokémon are selected", {
     weight_kg = c(6.9, 8.5, 9.0, 13.0, 6.0, 4.2),
     experience_growth = c(1000000, 1050000, 950000, 1100000, 1200000, 800000)
   )
-  
+
   # Select fewer than 6 Pokémon
   too_few <- c("Bulbasaur", "Charmander", "Squirtle")
-  expect_error(poketrain(too_few, dummy_data), 
-               "You must select exactly 6 Pokémon for training.")
-  
+  expect_error(
+    poketrain(too_few, dummy_data),
+    "You must select exactly 6 Pokémon for training."
+  )
+
   # Select more than 6 Pokémon
   too_many <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth", "Jigglypuff")
-  expect_error(poketrain(too_many, dummy_data), 
-               "You must select exactly 6 Pokémon for training.")
+  expect_error(
+    poketrain(too_many, dummy_data),
+    "You must select exactly 6 Pokémon for training."
+  )
 })
 
 test_that("poketrain throws an error if selected Pokémon do not exist", {
@@ -131,11 +135,13 @@ test_that("poketrain throws an error if selected Pokémon do not exist", {
     weight_kg = c(6.9, 8.5, 9.0),
     experience_growth = c(1000000, 1050000, 950000)
   )
-  
+
   # Select a nonexistent Pokémon
   nonexistent <- c("Pikachu", "Charmander", "Squirtle", "Ivysaur", "Meowth", "Jigglypuff")
-  expect_error(poketrain(nonexistent, dummy_data), 
-               "The following Pokémon are not in the dataset: Pikachu, Ivysaur, Meowth, Jigglypuff")
+  expect_error(
+    poketrain(nonexistent, dummy_data),
+    "The following Pokémon are not in the dataset: Pikachu, Ivysaur, Meowth, Jigglypuff"
+  )
 })
 
 test_that("poketrain handles an empty dataset gracefully", {
@@ -145,13 +151,15 @@ test_that("poketrain handles an empty dataset gracefully", {
     weight_kg = numeric(),
     experience_growth = numeric()
   )
-  
+
   # Select Pokémon (irrelevant because the dataset is empty)
   selected_pokemon <- c("Bulbasaur", "Charmander", "Squirtle", "Ivysaur", "Pikachu", "Meowth")
-  
+
   # Expect an error
-  expect_error(poketrain(selected_pokemon, empty_data), 
-               "The following Pokémon are not in the dataset: Bulbasaur, Charmander, Squirtle, Ivysaur, Pikachu, Meowth")
+  expect_error(
+    poketrain(selected_pokemon, empty_data),
+    "The following Pokémon are not in the dataset: Bulbasaur, Charmander, Squirtle, Ivysaur, Pikachu, Meowth"
+  )
 })
 
 
@@ -162,25 +170,27 @@ test_that("pokeskill correctly updates abilities for valid Pokémon", {
     name = c("Bulbasaur", "Charmander", "Squirtle"),
     abilities = c("['Overgrow']", "['Blaze']", "['Torrent']")
   )
-  
+
   # Apply the function
   updated_data <- pokeskill(
     pokemon = c("Bulbasaur", "Charmander"),
     new_skills = c("Solar Beam", "Inferno"),
     data = dummy_data
   )
-  
-  # Check updated abilities
+
+  # Check updated abilities for Bulbasaur
   expect_equal(
     updated_data$abilities[updated_data$name == "Bulbasaur"],
-    "['Overgrow'], Solar Beam, Inferno"
+    "['Overgrow', 'Solar Beam', 'Inferno']"
   )
+
+  # Check updated abilities for Charmander
   expect_equal(
     updated_data$abilities[updated_data$name == "Charmander"],
-    "['Blaze'], Solar Beam, Inferno"
+    "['Blaze', 'Solar Beam', 'Inferno']"
   )
-  
-  # Check unchanged abilities
+
+  # Check unchanged abilities for Squirtle
   expect_equal(
     updated_data$abilities[updated_data$name == "Squirtle"],
     "['Torrent']"
@@ -193,7 +203,7 @@ test_that("pokeskill throws an error for nonexistent Pokémon", {
     name = c("Bulbasaur", "Charmander", "Squirtle"),
     abilities = c("['Overgrow']", "['Blaze']", "['Torrent']")
   )
-  
+
   # Check for error with invalid Pokémon
   expect_error(
     pokeskill(
@@ -205,10 +215,41 @@ test_that("pokeskill throws an error for nonexistent Pokémon", {
   )
 })
 
+test_that("pokeskill correctly handles empty skills", {
+  # Create dummy data
+  dummy_data <- tibble(
+    name = c("Bulbasaur", "Charmander", "Squirtle"),
+    abilities = c("['Overgrow']", "['Blaze']", "['Torrent']")
+  )
 
+  # Apply the function with empty skills
+  updated_data <- pokeskill(
+    pokemon = c("Bulbasaur"),
+    new_skills = character(0),
+    data = dummy_data
+  )
 
+  # Check that abilities remain unchanged
+  expect_equal(
+    updated_data$abilities[updated_data$name == "Bulbasaur"],
+    "['Overgrow']"
+  )
+})
 
+test_that("pokeskill throws an error for an empty dataset", {
+  # Create empty dummy data
+  empty_data <- tibble(
+    name = character(),
+    abilities = character()
+  )
 
-
-
-
+  # Expect an error when using an empty dataset
+  expect_error(
+    pokeskill(
+      pokemon = c("Bulbasaur"),
+      new_skills = c("Solar Beam"),
+      data = empty_data
+    ),
+    "The following Pokémon are not in the dataset: Bulbasaur"
+  )
+})
